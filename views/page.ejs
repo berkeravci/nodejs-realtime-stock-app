@@ -1,0 +1,49 @@
+<%- include("header") %>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle || "Application" %></title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../client.js"></script>
+</head>
+<body>
+<table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Category</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Ops</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% products.forEach(product => { %>
+        <tr id="tr<%= product.id %>" class="<%= product.stock === 0 ? 'out-of-stock' : '' %>">
+          <td><%= product.id %></td>
+          <td><%= categories[product.category] %></td>
+          <td><%= product.name %></td>
+          <td>$<%= product.price %></td>
+          <td id="<%= product.id %>" class="stock"><%= product.stock %></td>
+          <td id="btn<%= product.id %>">
+            <% if (product.stock > 0) { %>
+              <button class="buy" data-product-id="<%= product.id %>">Buy</button>
+            <% } else { %>
+              Out of Stock
+            <% } %>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <div id="st"></div>
+
+  
+</body>
+</html>
